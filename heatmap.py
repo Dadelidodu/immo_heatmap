@@ -9,9 +9,14 @@ import plotly.express as px
 
 # Load the GeoDataFrame + Correlation DataFrame
 script_dir = os.path.dirname(os.path.abspath(__file__))
-
 geojson_dataset_path = os.path.join(script_dir, 'json_files/geojson_dataset.geojson')
-df = gpd.read_file(geojson_dataset_path)
+
+@st.cache_data
+def load_data():
+    return gpd.read_file(geojson_dataset_path)
+
+# Load the dataset using the cached function
+df = load_data()
 
 normalized_dataset_path = os.path.join(script_dir, 'data/normalized_dataset.csv')
 df_correlation = pd.read_csv(normalized_dataset_path)
@@ -45,10 +50,11 @@ with col1:
         with col1:
 
                # Extract relevant details for the selected municipality
-                selected_postcode = len(df['postcode'])
-                selected_mean_price = df['mean_price'].mean()
+                selected_postcode = int(len(df['postcode']))
+                selected_mean_price = int(df['mean_price'].mean())
                 
                 # Display the details in Streamlit
+                st.write(f"**Number of Postcodes**: {selected_postcode:.2f}")
                 st.write(f"**Average Price per m² (€)**: {selected_mean_price:.2f}")
         
         with col2:
@@ -58,10 +64,28 @@ with col1:
 
             # Create the colormap using `branca` library
             branca_cmap = branca.colormap.linear.YlOrRd_09.scale(df['mean_price'].min(), df['mean_price'].max())
-            
-            # Add GeoJson layer with custom colormap
-            folium.GeoJson(
-                df,
+
+            # Function to handle clicks on each feature (municipality)
+            def on_each_feature(feature, layer):
+                # Extract the unique identifier from the feature
+                feature_postcode = feature['properties']['postcode']
+
+                # Find the corresponding row in the DataFrame using the postcode
+                matching_row = df[df['postcode'] == feature_postcode].iloc[0]  # Assuming each postcode is unique
+
+                # Extract the details from the matching row in the DataFrame
+                municipality_name = matching_row['mun_name_fr']
+                postcode = matching_row['postcode']
+                mean_price = matching_row['mean_price']
+
+                # Display the details in Streamlit when the feature is clicked
+                st.write(f"**Municipality**: {municipality_name}")
+                st.write(f"**Postal Code**: {postcode}")
+                st.write(f"**Average Price per m² (€)**: {mean_price:.2f}")
+
+            # Create GeoJson layer
+            geojson_layer = folium.GeoJson(
+                df,  # Assuming df is GeoJSON formatted data
                 style_function=lambda feature: {
                     'fillColor': branca_cmap(feature['properties']['mean_price']),
                     'color': 'white',
@@ -73,12 +97,19 @@ with col1:
                     aliases=['Postal Code:', 'Price/m² (€):', 'Municipality:'],
                     localize=True,
                 ),
-            ).add_to(m)
+            )
+
+            # Set on_each_feature function to the GeoJson layer
+            geojson_layer.add_child(folium.GeoJsonPopup(fields=['mun_name_fr', 'postcode', 'mean_price']))
+            geojson_layer.on_each_feature = on_each_feature  # Ensure this is properly assigned
+
+            # Add the GeoJson layer to the map
+            geojson_layer.add_to(m)
 
             # Add the colormap legend to the map
             branca_cmap.add_to(m)
 
-            # Render the folium map in Streamlit
+            # Render the Folium map with Streamlit
             st_folium(m, height=400, use_container_width=True)
 
     elif select_reg and select_chart == 'Price/m2 by Postcode':

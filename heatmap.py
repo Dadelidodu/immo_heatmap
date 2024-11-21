@@ -17,6 +17,8 @@ def load_data():
 
 # Load the dataset using the cached function
 df = load_data()
+df['postcode'] = df['postcode'].astype(int)
+df['mean_price'] = df['mean_price'].astype(int)
 
 normalized_dataset_path = os.path.join(script_dir, 'data/normalized_dataset.csv')
 df_correlation = pd.read_csv(normalized_dataset_path)
@@ -487,3 +489,5 @@ with col1:
                     st.plotly_chart(fig, use_container_width=True)
                 else:
                     st.write("Please select at least two features to compute the correlation matrix.")
+
+st.write(df_correlation)

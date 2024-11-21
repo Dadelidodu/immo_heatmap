@@ -1,6 +1,7 @@
-geopandas
 folium
-streamlit_folium
+branca
 streamlit
-branca.colormap
-matplotlib.colors
+geopandas
+streamlit_folium
+pandas
+plotly

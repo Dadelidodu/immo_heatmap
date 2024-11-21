@@ -267,8 +267,8 @@ with col1:
 
                 # Add titles and update layout
                 fig.update_layout(
-                title="Correlation Matrix",
-                title_x=0.5,            # Center the title
+                
+                            # Center the title
                 width=800,              # Set width
                 height=800,             # Set height
                 xaxis=dict(
@@ -325,8 +325,8 @@ with col1:
 
                     # Add titles and update layout
                     fig.update_layout(
-                    title="Correlation Matrix",
-                    title_x=0.5,            # Center the title
+                    
+                                # Center the title
                     width=800,              # Set width
                     height=800,             # Set height
                     xaxis=dict(
@@ -380,8 +380,8 @@ with col1:
 
                     # Add titles and update layout
                     fig.update_layout(
-                    title="Correlation Matrix",
-                    title_x=0.5,            # Center the title
+                    
+                                # Center the title
                     width=800,              # Set width
                     height=800,             # Set height
                     xaxis=dict(
@@ -435,8 +435,8 @@ with col1:
 
                     # Add titles and update layout
                     fig.update_layout(
-                    title="Correlation Matrix",
-                    title_x=0.5,            # Center the title
+                    
+                                # Center the title
                     width=800,              # Set width
                     height=800,             # Set height
                     xaxis=dict(

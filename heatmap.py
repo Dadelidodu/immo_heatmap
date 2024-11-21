@@ -36,7 +36,7 @@ col1, col2 = st.columns([1.3, 2.7])
 
 # Add selectbox for region selection with 'All regions' as the first option
 with col1:
-    st.subheader("**Immo Eliza App**")
+    st.subheader("**Immo Belgium App**")
     select_reg = st.selectbox("Select a region", ['All regions'] + ['Wallonia','Flanders','Brussels'])
     select_chart = st.selectbox("Select a chart", ['Price/m2 by Postcode', 'Correlation Matrix'])
 
@@ -270,7 +270,7 @@ with col1:
                 title="Correlation Matrix",
                 title_x=0.5,            # Center the title
                 width=800,              # Set width
-                height=600,             # Set height
+                height=800,             # Set height
                 xaxis=dict(
                     showticklabels=False,  # Remove x-axis labels (column names)
                     ticks='',              # Remove x-axis ticks
@@ -328,7 +328,7 @@ with col1:
                     title="Correlation Matrix",
                     title_x=0.5,            # Center the title
                     width=800,              # Set width
-                    height=600,             # Set height
+                    height=800,             # Set height
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks
@@ -383,7 +383,7 @@ with col1:
                     title="Correlation Matrix",
                     title_x=0.5,            # Center the title
                     width=800,              # Set width
-                    height=600,             # Set height
+                    height=800,             # Set height
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks
@@ -438,7 +438,7 @@ with col1:
                     title="Correlation Matrix",
                     title_x=0.5,            # Center the title
                     width=800,              # Set width
-                    height=600,             # Set height
+                    height=800,             # Set height
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks

@@ -145,8 +145,26 @@ with col1:
                 # Create the colormap using `branca` library
                 branca_cmap = branca.colormap.linear.YlOrRd_09.scale(df_filtered['mean_price'].min(), df_filtered['mean_price'].max())
                 
+                # Function to handle clicks on each feature (municipality)
+                def on_each_feature(feature, layer):
+                    # Extract the unique identifier from the feature
+                    feature_postcode = feature['properties']['postcode']
+
+                    # Find the corresponding row in the DataFrame using the postcode
+                    matching_row = df[df['postcode'] == feature_postcode].iloc[0]  # Assuming each postcode is unique
+
+                    # Extract the details from the matching row in the DataFrame
+                    municipality_name = matching_row['mun_name_fr']
+                    postcode = matching_row['postcode']
+                    mean_price = matching_row['mean_price']
+
+                    # Display the details in Streamlit when the feature is clicked
+                    st.write(f"**Municipality**: {municipality_name}")
+                    st.write(f"**Postal Code**: {postcode}")
+                    st.write(f"**Average Price per m² (€)**: {mean_price:.2f}")
+
                 # Add GeoJson layer with custom colormap
-                folium.GeoJson(
+                geojson_layer = folium.GeoJson(
                     df_filtered,
                     style_function=lambda feature: {
                         'fillColor': branca_cmap(feature['properties']['mean_price']),
@@ -160,6 +178,10 @@ with col1:
                         localize=True,
                     ),
                 ).add_to(m)
+
+                # Set on_each_feature function to the GeoJson layer
+                geojson_layer.add_child(folium.GeoJsonPopup(fields=['mun_name_fr', 'postcode', 'mean_price']))
+                geojson_layer.on_each_feature = on_each_feature  # Ensure this is properly assigned
 
                 # Add the colormap legend to the map
                 branca_cmap.add_to(m)
@@ -195,8 +217,26 @@ with col1:
                 # Create the colormap using `branca` library
                 branca_cmap = branca.colormap.linear.YlOrRd_09.scale(df_filtered['mean_price'].min(), df_filtered['mean_price'].max())
                 
+                # Function to handle clicks on each feature (municipality)
+                def on_each_feature(feature, layer):
+                    # Extract the unique identifier from the feature
+                    feature_postcode = feature['properties']['postcode']
+
+                    # Find the corresponding row in the DataFrame using the postcode
+                    matching_row = df[df['postcode'] == feature_postcode].iloc[0]  # Assuming each postcode is unique
+
+                    # Extract the details from the matching row in the DataFrame
+                    municipality_name = matching_row['mun_name_fr']
+                    postcode = matching_row['postcode']
+                    mean_price = matching_row['mean_price']
+
+                    # Display the details in Streamlit when the feature is clicked
+                    st.write(f"**Municipality**: {municipality_name}")
+                    st.write(f"**Postal Code**: {postcode}")
+                    st.write(f"**Average Price per m² (€)**: {mean_price:.2f}")
+
                 # Add GeoJson layer with custom colormap
-                folium.GeoJson(
+                geojson_layer = folium.GeoJson(
                     df_filtered,
                     style_function=lambda feature: {
                         'fillColor': branca_cmap(feature['properties']['mean_price']),
@@ -210,6 +250,10 @@ with col1:
                         localize=True,
                     ),
                 ).add_to(m)
+
+                # Set on_each_feature function to the GeoJson layer
+                geojson_layer.add_child(folium.GeoJsonPopup(fields=['mun_name_fr', 'postcode', 'mean_price']))
+                geojson_layer.on_each_feature = on_each_feature  # Ensure this is properly assigned
 
                 # Add the colormap legend to the map
                 branca_cmap.add_to(m)
@@ -246,8 +290,26 @@ with col1:
                 # Create the colormap using `branca` library
                 branca_cmap = branca.colormap.linear.YlOrRd_09.scale(df_filtered['mean_price'].min(), df_filtered['mean_price'].max())
                 
+                # Function to handle clicks on each feature (municipality)
+                def on_each_feature(feature, layer):
+                    # Extract the unique identifier from the feature
+                    feature_postcode = feature['properties']['postcode']
+
+                    # Find the corresponding row in the DataFrame using the postcode
+                    matching_row = df[df['postcode'] == feature_postcode].iloc[0]  # Assuming each postcode is unique
+
+                    # Extract the details from the matching row in the DataFrame
+                    municipality_name = matching_row['mun_name_fr']
+                    postcode = matching_row['postcode']
+                    mean_price = matching_row['mean_price']
+
+                    # Display the details in Streamlit when the feature is clicked
+                    st.write(f"**Municipality**: {municipality_name}")
+                    st.write(f"**Postal Code**: {postcode}")
+                    st.write(f"**Average Price per m² (€)**: {mean_price:.2f}")
+
                 # Add GeoJson layer with custom colormap
-                folium.GeoJson(
+                geojson_layer = folium.GeoJson(
                     df_filtered,
                     style_function=lambda feature: {
                         'fillColor': branca_cmap(feature['properties']['mean_price']),
@@ -261,6 +323,10 @@ with col1:
                         localize=True,
                     ),
                 ).add_to(m)
+
+                # Set on_each_feature function to the GeoJson layer
+                geojson_layer.add_child(folium.GeoJsonPopup(fields=['mun_name_fr', 'postcode', 'mean_price']))
+                geojson_layer.on_each_feature = on_each_feature  # Ensure this is properly assigned
 
                 # Add the colormap legend to the map
                 branca_cmap.add_to(m)

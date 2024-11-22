@@ -45,9 +45,9 @@ col1, col2 = st.columns([1.3, 2.7])
 with col1:
     st.subheader("**Immo Belgium App**")
     select_reg = st.selectbox("Select a region", ['All regions'] + ['Wallonia','Flanders','Brussels'])
-    select_chart = st.selectbox("Select a chart", ['Price/m2 by Postcode', 'Correlation Matrix'])
+    select_chart = st.selectbox("Select a chart", ['Price Heatmap', 'Correlation Matrix'])
 
-    if select_reg == 'All regions' and select_chart == 'Price/m2 by Postcode':
+    if select_reg == 'All regions' and select_chart == 'Price Heatmap':
 
         with col1:
 
@@ -114,7 +114,7 @@ with col1:
             # Render the Folium map with Streamlit
             st_folium(m, height=400, use_container_width=True)
 
-    elif select_reg and select_chart == 'Price/m2 by Postcode':
+    elif select_reg and select_chart == 'Price Heatmap':
 
         if select_reg == 'Wallonia':
             # Filter the dataframe for the selected region

@@ -5,3 +5,5 @@ geopandas
 streamlit_folium
 pandas
 plotly
+numpy
+scikit-learn

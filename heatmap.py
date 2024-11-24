@@ -174,6 +174,7 @@ with col2:
             )
         
         with col1:
+
             if len(select_columns) > 1:  # Ensure at least two columns are selected
                 # Compute the correlation matrix
                 correlation_matrix = df_correlation[select_columns].corr()
@@ -182,37 +183,30 @@ with col2:
                 fig = px.imshow(
                     correlation_matrix,
                     color_continuous_scale=[[0, '#202060'], [1, '#00ff00']],  # Custom color scale
-                    text_auto=".2f")
-
-                # Add titles and update layout
-                fig.update_layout(
-                
-                            # Center the title
-                width=600,
-                height=600,
-                xaxis=dict(
-                    showticklabels=False,  # Remove x-axis labels (column names)
-                    ticks='',              # Remove x-axis ticks
-                    title='',              # Remove x-axis title
-                ),
-                yaxis=dict(
-                    showticklabels=False,  # Remove y-axis labels (row names)
-                    ticks='',              # Remove y-axis ticks
-                    title='',              # Remove y-axis title
-                ),
-                coloraxis_showscale=False,  # Hide the color bar (legend)
+                    text_auto=".2f"
                 )
 
-                st.markdown("""
-                <style>
-                iframe {
-                    width: 100% !important;
-                }
-                </style>
-                """, unsafe_allow_html=True)
+                # Add layout settings (no width/height here)
+                fig.update_layout(
+                    width=800,
+                    height=800,
+                    xaxis=dict(
+                        showticklabels=False,  # Remove x-axis labels (column names)
+                        ticks='',              # Remove x-axis ticks
+                        title='',              # Remove x-axis title
+                    ),
+                    yaxis=dict(
+                        showticklabels=False,  # Remove y-axis labels (row names)
+                        ticks='',              # Remove y-axis ticks
+                        title='',              # Remove y-axis title
+                    ),
+                    coloraxis_showscale=False  # Hide the color bar (legend)
+                )
 
                 # Render the Plotly heatmap in Streamlit
+
                 st.plotly_chart(fig, use_container_width=True)
+
             else:
                 st.write("Please select at least two features to compute the correlation matrix.")
 
@@ -251,10 +245,8 @@ with col2:
 
                     # Add titles and update layout
                     fig.update_layout(
-                    
-                                # Center the title
-                    autosize = True,
-                    
+                    width=800,
+                    height=800,
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks
@@ -265,9 +257,8 @@ with col2:
                         ticks='',              # Remove y-axis ticks
                         title='',              # Remove y-axis title
                     ),
-                    coloraxis_showscale=False,  # Hide the color bar (legend)
+                    coloraxis_showscale=False  # Hide the color bar (legend)
                     )
-
                     # Render the Plotly heatmap in Streamlit
                     st.plotly_chart(fig, use_container_width=True)
                 else:
@@ -305,10 +296,8 @@ with col2:
 
                     # Add titles and update layout
                     fig.update_layout(
-                    
-                                # Center the title
-                    autosize = True,
-                    
+                    width=800,
+                    height=800,
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks
@@ -319,7 +308,7 @@ with col2:
                         ticks='',              # Remove y-axis ticks
                         title='',              # Remove y-axis title
                     ),
-                    coloraxis_showscale=False,  # Hide the color bar (legend)
+                    coloraxis_showscale=False  # Hide the color bar (legend)
                     )
 
                     # Render the Plotly heatmap in Streamlit
@@ -359,10 +348,8 @@ with col2:
                     
                     # Add titles and update layout
                     fig.update_layout(
-                    
-                                # Center the title
-                    autosize = True,
-                    
+                    width=800,
+                    height=800,
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks
@@ -373,7 +360,7 @@ with col2:
                         ticks='',              # Remove y-axis ticks
                         title='',              # Remove y-axis title
                     ),
-                    coloraxis_showscale=False,  # Hide the color bar (legend)
+                    coloraxis_showscale=False  # Hide the color bar (legend)
                     )
 
                     # Render the Plotly heatmap in Streamlit

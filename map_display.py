@@ -17,7 +17,13 @@ def calculate_price_range(_df):
     return min_price, max_price
 
 def calculate_color_map(min_price, max_price):
-    return branca.colormap.LinearColormap(['#202060',  '#00ff00'], vmin=min_price, vmax=max_price)
+    colormap = branca.colormap.LinearColormap(['#202060',  '#00ff00'], vmin=min_price, vmax=max_price)
+    colormap.caption = """
+        <div style="color: white; font-size: 14px; font-weight: bold; text-align: center;">
+            Price Range (€)
+        </div>
+        """
+    return colormap
 
 def style_function(feature, branca_cmap):
     style_function = {

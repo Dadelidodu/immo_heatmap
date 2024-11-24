@@ -11,10 +11,10 @@ from sklearn.linear_model import LinearRegression
 
 # Load the dataset using the cached function
 
-st.set_page_config(page_title="Wide Screen Layout Example", page_icon="🏠", layout="wide")
+st.set_page_config(page_title="Immo Belgium App", page_icon="🏠", layout="wide")
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-geojson_dataset_path = os.path.join(script_dir, 'json_files/geojson_dataset.geojson')
+geojson_dataset_path = os.path.join(script_dir, 'json_files/gdf_merged.geojson')
 
 _df = load_data(geojson_dataset_path)
 
@@ -69,15 +69,15 @@ with col2:
                     selected_municipality = _df_filtered[_df_filtered['mun_name_fr'] == select_mun].iloc[0]
                     
                     # Extract relevant details for the selected municipality
-                    selected_postcode = selected_municipality['postcode']
-                    selected_mean_price = selected_municipality['mean_price']
+                    selected_postcode = selected_municipality['Zip Code']
+                    selected_mean_price = selected_municipality['mean_price_by_locality']
                     
                     # Display the details in Streamlit
                     st.write(f"**Postal Code**: {selected_postcode}")
                     st.write(f"**Average Price per m² (€)**: {selected_mean_price:.2f}")
             
             # Clear previous map and create a new one in col1
-            with col2:
+            with col1:
                 st.markdown("""
                 <style>
                 iframe {
@@ -103,15 +103,15 @@ with col2:
                     selected_municipality = _df_filtered[_df_filtered['mun_name_fr'] == select_mun].iloc[0]
                     
                     # Extract relevant details for the selected municipality
-                    selected_postcode = selected_municipality['postcode']
-                    selected_mean_price = selected_municipality['mean_price']
+                    selected_postcode = selected_municipality['Zip Code']
+                    selected_mean_price = selected_municipality['mean_price_by_locality']
                     
                     # Display the details in Streamlit
                     st.write(f"**Postal Code**: {selected_postcode}")
                     st.write(f"**Average Price per m² (€)**: {selected_mean_price:.2f}")
             
             # Clear previous map and create a new one in col1
-            with col2:
+            with col1:
                 st.markdown("""
                 <style>
                 iframe {
@@ -126,25 +126,25 @@ with col2:
         if select_reg == 'Brussels':
 
             # Filter the dataframe for the selected region
-            df_filtered = _df[_df['reg_name_fr'] == 'Région de Bruxelles-Capitale']
+            _df_filtered = _df[_df['reg_name_fr'] == 'Région de Bruxelles-Capitale']
             with col2:
 
-                select_mun = st.selectbox("Select a municipality", df_filtered.sort_values(by='mun_name_fr',ascending=True)['mun_name_fr'].unique())
+                select_mun = st.selectbox("Select a municipality", _df_filtered.sort_values(by='mun_name_fr',ascending=True)['mun_name_fr'].unique())
         
                 if select_mun:
                     # Filter the dataset to get the selected municipality data
-                    selected_municipality = df_filtered[df_filtered['mun_name_fr'] == select_mun].iloc[0]
+                    selected_municipality = _df_filtered[_df_filtered['mun_name_fr'] == select_mun].iloc[0]
                     
                     # Extract relevant details for the selected municipality
-                    selected_postcode = selected_municipality['postcode']
-                    selected_mean_price = selected_municipality['mean_price']
+                    selected_postcode = selected_municipality['Zip Code']
+                    selected_mean_price = selected_municipality['mean_price_by_locality']
                     
                     # Display the details in Streamlit
                     st.write(f"**Postal Code**: {selected_postcode}")
                     st.write(f"**Average Price per m² (€)**: {selected_mean_price:.2f}")
             
             # Clear previous map and create a new one in col1
-            with col2:
+            with col1:
                 st.markdown("""
                 <style>
                 iframe {
@@ -181,16 +181,15 @@ with col2:
                 # Create an interactive heatmap using Plotly without annotations or legend
                 fig = px.imshow(
                     correlation_matrix,
-                    color_continuous_scale='YlOrRd',
-                    text_auto=".2f"
-                )
+                    color_continuous_scale=[[0, '#202060'], [1, '#00ff00']],  # Custom color scale
+                    text_auto=".2f")
 
                 # Add titles and update layout
                 fig.update_layout(
                 
                             # Center the title
-                width=800,              # Set width
-                height=800,             # Set height
+                width=600,
+                height=600,
                 xaxis=dict(
                     showticklabels=False,  # Remove x-axis labels (column names)
                     ticks='',              # Remove x-axis ticks
@@ -203,6 +202,14 @@ with col2:
                 ),
                 coloraxis_showscale=False,  # Hide the color bar (legend)
                 )
+
+                st.markdown("""
+                <style>
+                iframe {
+                    width: 100% !important;
+                }
+                </style>
+                """, unsafe_allow_html=True)
 
                 # Render the Plotly heatmap in Streamlit
                 st.plotly_chart(fig, use_container_width=True)
@@ -238,17 +245,16 @@ with col2:
 
                     # Create an interactive heatmap using Plotly without annotations or legend
                     fig = px.imshow(
-                        correlation_matrix,
-                        color_continuous_scale='YlOrRd',
-                        text_auto=".2f"
-                    )
+                    correlation_matrix,
+                    color_continuous_scale=[[0, '#202060'], [1, '#00ff00']],  # Custom color scale
+                    text_auto=".2f")
 
                     # Add titles and update layout
                     fig.update_layout(
                     
                                 # Center the title
-                    width=800,              # Set width
-                    height=800,             # Set height
+                    autosize = True,
+                    
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks
@@ -293,17 +299,16 @@ with col2:
 
                     # Create an interactive heatmap using Plotly without annotations or legend
                     fig = px.imshow(
-                        correlation_matrix,
-                        color_continuous_scale='YlOrRd',
-                        text_auto=".2f"
-                    )
+                    correlation_matrix,
+                    color_continuous_scale=[[0, '#202060'], [1, '#00ff00']],  # Custom color scale
+                    text_auto=".2f")
 
                     # Add titles and update layout
                     fig.update_layout(
                     
                                 # Center the title
-                    width=800,              # Set width
-                    height=800,             # Set height
+                    autosize = True,
+                    
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks
@@ -348,17 +353,16 @@ with col2:
 
                     # Create an interactive heatmap using Plotly without annotations or legend
                     fig = px.imshow(
-                        correlation_matrix,
-                        color_continuous_scale='YlOrRd',
-                        text_auto=".2f"
-                    )
-
+                    correlation_matrix,
+                    color_continuous_scale=[[0, '#202060'], [1, '#00ff00']],  # Custom color scale
+                    text_auto=".2f")
+                    
                     # Add titles and update layout
                     fig.update_layout(
                     
                                 # Center the title
-                    width=800,              # Set width
-                    height=800,             # Set height
+                    autosize = True,
+                    
                     xaxis=dict(
                         showticklabels=False,  # Remove x-axis labels (column names)
                         ticks='',              # Remove x-axis ticks
